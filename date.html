@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h2>현재날짜시간출력</h2>
+  <div id="date"></div>
+
+  <script>
+    //내장객체 : 자바스크립트 내부에서 만들어져서 제공하는 객체
+    //Date : 날짜, 시간, 요일에 대한 정보가 들어있는 객체 //객체안에서 함수가 만들어지면 메서드
+
+    //현재날짜와 시간을 출력해주는 함수 만들기
+    function startDate(){ //startDate()라는 함수를 만듦
+      var now=new Date();//Date객체 생성 >>new Date()를 가져와서 now라는 변수에 저장한다.
+      var year=now.getFullYear();//년도
+      var month=now.getMonth()+1;//월 0부터시작하므로 +1을 해준다.
+      var date=now.getDate();//일
+      var day=now.getDay();//요일
+      var hours=now.getHours();//시
+      var minutes=now.getMinutes();//분
+      var seconds=now.getSeconds();//초
+      var mSeconds=now.getMilliseconds();//밀리세컨즈
+      var ampm='오전';//오전 또는 오후를 저장하는 변수
+
+      if(hours>=12){
+        ampm='오후'; //만약 var를 붙여서 var ampm변수는 지역변수가 된다.
+        //현재 시간이 12시 이상일때 12=>0, 13=>1로 변경하기
+        hours=hours-12;
+      }
+
+      //요일구하기
+      var days=['일','월','화','수','목','금','토']; //요일의 변수는 23번라인의 day가 가지고 있으므로
+      //53번 라인의 검사를 거친 후 값을 리턴받아 최종출력되게 한다.
+      var date=year+'.'+zero(month)+'.'+zero(date)+'('+days[day]+')'; //요일의 변수는 23번라인의 day가 가지고 있으므로 >> yyyy.mm.dd(요일)
+      var time=ampm+' '+zero(hours)+':'+zero(minutes)+':'+zero(seconds)+':'+zero(mSeconds); //오전
+
+      document.getElementById('date').innerHTML=date+'<br>'+time;
+    }                              //innerText는 문자열, innerHTML는 태그로써 읽어준다
+
+    //함수 호출하기
+    startDate();
+
+    setInterval(startDate,10);//setInterval()타이머함수-(일정시간마다 함수를 계속 호출실행)
+                              //setTimeout()일정시간마다 한번 실행한다.
+
+    /* 두자리 패턴으로 만들어주는 함수*/
+    function zero(num){//숫자(num)로 두자리패턴으로 만들기 위해 받아오는 값   //여기서 만든 zero값은 39,40라인에 저장해준다.
+      if (num<10) { //받아온 num이 숫자 10보다 작을경우에만 앞에 0붙이기
+        num='0'+num;//문자열로 된 '0'으로 가져와야 01,02...이런식으로 붙는다. (숫자열로 그냥 0으로 작성하면 안된다.)
+      }
+      return num;//검사를 거친num값을 반환시켜준다.
+    }
+
+  </script>
+</body>
+</html>
